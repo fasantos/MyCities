@@ -1,0 +1,25 @@
+{
+  "name": "MyCities",
+  "version": "0.0.0",
+  "description": "App to store my prefered cities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fasantos/MyCities.git"
+  },
+  "keywords": [
+    "store",
+    "cities"
+  ],
+  "author": "Filomeno Santos <filomenosantos@gmail.com>",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/fasantos/MyCities/issues"
+  },
+  "dependencies": {
+    "express": "~4.12.3"
+  }
+}
