@@ -67,3 +67,20 @@ describe('Creating new Cities', function () {
 			.expect(/Gzira/i, done);
 	});
 });
+
+describe('Deleting cities', function () {
+
+	before(function() {
+		client.hset('cities', 'Valleta', 'is the capital of Malta');
+	});
+
+	after(function() {
+		client.flushdb();
+	});
+
+	it('Return a 204 status code',function (done) {
+		request(app)
+			.delete('/cities/Valleta')
+			.expect(204, done);	
+	});
+});
