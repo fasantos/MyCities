@@ -91,3 +91,32 @@ describe('Deleting cities', function () {
 			.expect(204, done);	
 	});
 });
+
+describe('Show city info', function (done) {
+
+	before(function() {
+		client.hset('cities', 'Valleta', 'is the capital of Malta');
+	});
+
+	after(function() {
+		client.flushdb();
+	});
+
+	it('Returns 200 status code',function (done) {
+		request(app)
+			.get('/cities/Valleta')
+			.expect(200, done);
+	});
+
+	it('Returns HTML format', function(done) {
+		request(app)
+			.get('/cities/Valleta')
+			.expect('Content-Type', /html/, done);
+	});
+
+	it('Returns information for given city', function(done) {
+		request(app)
+			.get('/cities/Valleta')
+			.expect(/\n/, done);
+	});
+});
