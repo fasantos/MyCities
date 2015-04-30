@@ -4,7 +4,7 @@
   "description": "App to store my prefered cities",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.js"
+    "test": " NODE_ENV=test mocha -w app.js test.js"
   },
   "repository": {
     "type": "git",
@@ -21,11 +21,13 @@
   },
   "dependencies": {
     "express": "~4.12.3",
-    "body-parser": "~1.12.3"
+    "body-parser": "~1.12.3",
+    "redis": "~0.12.1",
+    "hiredis": "~0.3.0"
   },
   "devDependencies": {
     "supertest": "~0.15.0",
     "mocha": "~2.2.4",
-    "node":"~0.10.25"
+    "node": "~0.10.25"
   }
 }

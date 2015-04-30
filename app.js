@@ -8,29 +8,37 @@ var urlencode = bodyParser.urlencoded({extended: false});
 
 app.use(express.static('public'));
 
-app.get('/', function(req, res) {
-	res.send('Hello World');
-});
+//Redis connection
+var redis = require('redis');
+if (process.env.REDISTOGO_URL) {
+    var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+	var client = redis.createClient(rtg.port, rtg.hostname);
+	client.auth(rtg.auth.split(":")[1]);
 
-module.exports = app;
+} else {
+    var client = redis.createClient();
+}
 
-var cities = {
-	'Lisboa': 'some desc', 
-	'Barcelona': 'des', 
-	'Madrid': 'descr'
-};
+client.select((process.env.NODE_ENV || 'development').length);
+
+// End redis connection
 
 app.get('/cities', function(request, response) {
-	response.json(Object.keys(cities));
+	client.hkeys('cities', function(error, names) {
+		if (error) {throw error};
+		response.json(names);
+	});
 });
 
 app.post('/cities', urlencode, function(request, response) {
 	var newCity = request.body;
-	cities[newCity.name] = newCity.description; 
-	response.status(201).json(newCity.name);
+	client.hset('cities', newCity.name, newCity.description, function(error) {
+		if (error) {throw error};
+		response.status(201).json(newCity.name);		
+	});
 });
 
-
+module.exports = app;
 
 
 

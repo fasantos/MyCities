@@ -1,17 +1,13 @@
 var request = require('supertest');
 var app = require('./app');
 
-
-
-describe('Listing cities on /cities', function () {
-	it('Returns 200 status code',function (done) {
-		request(app)
-			.get('/cities')
-			.expect(200, done)		
-	})
-});
+var redis = require('redis');
+var client = redis.createClient();
+client.select('test'.length);
+client.flushdb();
 
 describe('Request to the root path', function () {
+
 	it('Returns a 200 status code', function(done) {
 	request(app)
 		.get('/')
@@ -30,20 +26,33 @@ describe('Request to the root path', function () {
 			.expect(/cities/i, done);
 	})
 
-	it('Returns JSON format', function(done) {
+});
+
+describe('Listing cities on /cities', function () {
+
+	it('Returns 200 status code',function (done) {
+		request(app)
+			.get('/cities')
+			.expect(200, done)		
+	})
+
+	it('Returns JSON format', function (done) {
 		request(app)
 			.get('/cities')
 			.expect('Content-Type', /json/, done);
 	});
 
-	it('Returns initial cities', function(done) {
+	it('Returns initial cities', function (done) {
 		request(app)
 			.get('/cities')
-			.expect(JSON.stringify(['Lisboa', 'Barcelona', 'Madrid']), done);
+			.expect(JSON.stringify([]), done);
 	});
 });
 
 describe('Creating new Cities', function () {
+
+	
+
 	it('Returns a 201 status code',function (done) {
 		request(app)
 			.post('/cities')
