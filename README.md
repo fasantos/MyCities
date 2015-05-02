@@ -13,9 +13,9 @@ To run tests, run `npm test`. These alsodepend on a redis server up and running.
 
 ## Implementetion
 
-[MyCities][MyCities]
+[MyCities][mycities]
 
 [expresssouptobits]: https://github.com/codeschool/expresssouptobits/
 [building-blocks-of-express-js]: https://www.codeschool.com/courses/building-blocks-of-express-js/
 [codeschool]: https://www.codeschool.com/
-[MyCities]: https:/mycities.herokuapp.com/
+[mycities]: https://mycities.herokuapp.com/
